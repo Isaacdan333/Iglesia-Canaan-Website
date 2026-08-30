@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photo Gallery | Iglesia Canaan</title>
+    <meta name="description" content="See photos of Iglesia Canaan, our church family, ministries, and gatherings." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <div class="brand-controls">
+          <a href="index.html" class="brand" aria-label="Iglesia Canaan home">
+            <img src="images/church/church logo.png" alt="Iglesia Canaan logo" class="brand-logo" />
+            <div>
+              <span class="brand-name">Iglesia Canaan</span>
+              <span class="brand-tag">Growing in Faith Together</span>
+            </div>
+          </a>
+          <button class="language-toggle" type="button" data-language-toggle aria-label="Switch to Spanish">Cambiar a español</button>
+        </div>
+
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="index.html">Home</a>
+          <div class="nav-dropdown">
+            <a href="ministries.html" aria-haspopup="true">Ministries</a>
+            <div class="dropdown-menu">
+              <a href="ministries.html">All Ministries</a>
+              <a href="youth-ministry.html">Youth Ministry</a>
+            </div>
+          </div>
+          <a href="main-schedule.html">Schedule</a>
+          <a href="events.html">Events</a>
+          <a href="gallery.html" class="active">Gallery</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero small-hero">
+        <div class="container gallery-intro">
+          <p class="section-tag">Photo Gallery</p>
+          <h1>Come see what life at Iglesia Canaan is like.</h1>
+          <p>Explore photos of our church, our people, and the moments we share together in faith.</p>
+        </div>
+      </section>
+
+      <!-- This is the section that has the photos playing in a slideshow -->
+      <section class="gallery-slideshow-section" aria-label="Featured gallery slideshow">
+        <div class="gallery-slideshow" data-gallery-slideshow>
+          <div class="gallery-slideshow-track"></div>
+        </div>
+      </section>
+
+      <section class="section" data-gallery-page></section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-wrap">
+        <div>
+          <p class="footer-title">Iglesia Canaan</p>
+          <p>Growing in faith, serving with love.</p>
+        </div>
+        <div class="footer-links">
+          <a href="https://facebook.com" target="_blank" rel="noreferrer">Facebook</a>
+          <a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </footer>
+    <script src="gallery.js"></script>
+    <script src="language.js"></script>
+  </body>
+</html>

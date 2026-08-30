@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events | Iglesia Canaan</title>
+    <meta name="description" content="See upcoming events and gatherings at Iglesia Canaan." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <div class="brand-controls">
+          <a href="index.html" class="brand" aria-label="Iglesia Canaan home">
+          <img src="images/church/church logo.png" alt="Iglesia Canaan logo" class="brand-logo" />
+          <div>
+            <span class="brand-name">Iglesia Canaan</span>
+            <span class="brand-tag">Growing in Faith Together</span>
+          </div>
+          </a>
+          <button class="language-toggle" type="button" data-language-toggle aria-label="Switch to Spanish">Cambiar a español</button>
+        </div>
+
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="index.html">Home</a>
+          <div class="nav-dropdown">
+            <a href="ministries.html" aria-haspopup="true">Ministries</a>
+            <div class="dropdown-menu">
+              <a href="ministries.html">All Ministries</a>
+              <a href="youth-ministry.html">Youth Ministry</a>
+            </div>
+          </div>
+          <a href="main-schedule.html">Schedule</a>
+          <a href="events.html" class="active">Events</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero small-hero">
+        <div class="container">
+          <p class="section-tag">Events</p>
+          <h1>Gathering with purpose.</h1>
+        </div>
+      </section>
+
+      <section class="section photo-section" data-photo-album="events"></section>
+
+      <section class="section">
+        <div class="container events-list">
+          <article class="event-card">
+            <div class="event-date">
+              <span class="month">Sun</span>
+              <span class="day">11 AM</span>
+            </div>
+            <div>
+              <h2>Sunday Service</h2>
+              <p>Join us for worship, prayer, and a message centered on faith and growth.</p>
+            </div>
+          </article>
+
+          <article class="event-card">
+            <div class="event-date">
+              <span class="month">Thu</span>
+              <span class="day">7 PM</span>
+            </div>
+            <div>
+              <h2>Thursday Prayer & Fellowship</h2>
+              <p>Spend time in prayer, encouragement, and community as we grow closer to God.</p>
+            </div>
+          </article>
+
+          <article class="event-card">
+            <div class="event-date">
+              <span class="month">Youth</span>
+              <span class="day">7:30 PM</span>
+            </div>
+            <div>
+              <h2>Youth Gathering</h2>
+              <p>A welcoming time for young people to connect, learn, and grow in faith together.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-wrap">
+        <div>
+          <p class="footer-title">Iglesia Canaan</p>
+          <p>Growing in faith, serving with love.</p>
+        </div>
+        <div class="footer-links">
+          <a href="https://facebook.com" target="_blank" rel="noreferrer">Facebook</a>
+          <a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </footer>
+    <script src="gallery.js"></script>
+    <script src="language.js"></script>
+  </body>
+</html>
