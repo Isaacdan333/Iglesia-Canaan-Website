@@ -1,107 +1,33 @@
-const churchSchedule = {
-  month: "September 2026",
-  services: [
-    {
-      date: "Thursday, September 3",
-      time: "No service due to Vigilia",
-      moderator: "None",
-      worshipLeader: "None",
-      tiempos: ["None"],
-      preacher: "No service"
-    },
-    {
-      date: "Sunday, September 6",
-      time: "11:00 AM - 1:00 PM",
-      highlight: "Santa Cena",
-      moderator: "Maria Isabel Pineda",
-      worshipLeader: "Canaan Group",
-      tiempos: ["To be assigned"],
-      preacher: "Pablo Pineda"
-    },
-    {
-      date: "Thursday, September 10",
-      time: "7:00 PM - 9:00 PM",
-      moderator: "Maria Isabel Pineda",
-      worshipLeader: "Edia Rivera",
-      tiempos: ["Sarai Martinez", "Joel Yax"],
-      preacher: "Marina Martinez"
-    },
-    {
-      date: "Sunday, September 13",
-      time: "11:00 AM - 1:00 PM",
-      moderator: "Pablo Pineda",
-      worshipLeader: "Canaan Group",
-      tiempos: ["To be assigned"],
-      preacher: "Sofonias Gonzalez"
-    },
-    {
-      date: "Thursday, September 17",
-      time: "7:00 PM - 9:00 PM",
-      moderator: "Rebeca Mendez",
-      worshipLeader: "Lorenzo Martinez",
-      tiempos: ["Magda Quintana"],
-      preacher: "Willie Velasquez"
-    },
-    {
-      date: "Sunday, September 20",
-      time: "11:00 AM - 1:00 PM",
-      moderator: "Pablo Pineda",
-      worshipLeader: "Canaan Group",
-      tiempos: ["To be assigned"],
-      preacher: "Eric Perez"
-    },
-    {
-      date: "Thursday, September 24",
-      time: "7:00 PM - 9:00 PM",
-      moderator: "Debora Martinez",
-      worshipLeader: "David Martinez",
-      tiempos: ["Luis Quintana"],
-      preacher: "Olegario Barrios"
-    },
-    {
-      date: "Sunday, September 27",
-      time: "11:00 AM - 1:00 PM",
-      moderator: "Pastor Pablo Pineda",
-      worshipLeader: "Canaan Group",
-      tiempos: ["To be assigned"],
-      preacher: "Guillermo Roble"
-    }
-  ]
-};
+function formatTime(value) {
+  return new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit" }).format(new Date(`1970-01-01T${value}`));
+}
 
 function createScheduleField(label, value) {
   const item = document.createElement("div");
   item.className = "schedule-field";
-
   const fieldLabel = document.createElement("dt");
   fieldLabel.textContent = label;
   const fieldValue = document.createElement("dd");
-  fieldValue.textContent = value;
-
+  fieldValue.textContent = value || "To be assigned";
   item.append(fieldLabel, fieldValue);
   return item;
 }
 
 function createScheduleCard(service) {
+  const date = new Date(`${service.service_date}T12:00:00Z`);
   const article = document.createElement("article");
-  article.className = `schedule-card reveal-item${service.highlight ? " schedule-card-featured" : ""}`;
-
+  article.className = `schedule-card${service.highlight ? " schedule-card-featured" : ""}`;
   const heading = document.createElement("div");
   heading.className = "schedule-card-heading";
-
   const day = document.createElement("p");
   day.className = "schedule-day";
-  day.textContent = service.date.split(",")[0];
-
+  day.textContent = new Intl.DateTimeFormat("en-US", { weekday: "long", timeZone: "UTC" }).format(date);
   const dateTitle = document.createElement("h2");
-  dateTitle.textContent = service.date.substring(service.date.indexOf(",") + 2);
-
+  dateTitle.textContent = new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" }).format(date);
   const time = document.createElement("p");
   time.className = "schedule-time";
-  time.textContent = service.time;
-
+  time.textContent = `${formatTime(service.start_time)} - ${formatTime(service.end_time)}`;
   heading.append(day, dateTitle, time);
-
   if (service.highlight) {
     const highlight = document.createElement("p");
     highlight.className = "schedule-highlight";
@@ -112,27 +38,37 @@ function createScheduleCard(service) {
   const details = document.createElement("dl");
   details.className = "schedule-details";
   details.append(
+    createScheduleField("Service", service.title),
+    createScheduleField("Location", service.location),
     createScheduleField("Moderator", service.moderator),
-    createScheduleField("Worship leader", service.worshipLeader)
+    createScheduleField("Worship leader", service.worship_leader),
+    createScheduleField("Tiempos", service.tiempos),
+    createScheduleField("Preacher", service.preacher)
   );
-
-  if (service.date.startsWith("Thursday")) {
-    details.append(createScheduleField("Tiempos", service.tiempos.join(" / ")));
-  }
-
-  details.append(createScheduleField("Preacher", service.preacher));
-
+  if (service.notes) details.append(createScheduleField("Notes", service.notes));
   article.append(heading, details);
   return article;
 }
 
-function renderSchedule() {
+async function renderSchedule() {
   const schedule = document.querySelector("[data-schedule]");
   if (!schedule) return;
-
-  schedule.querySelector("[data-schedule-month]").textContent = churchSchedule.month;
   const list = schedule.querySelector("[data-schedule-list]");
-  churchSchedule.services.forEach((service) => list.append(createScheduleCard(service)));
+  const month = schedule.querySelector("[data-schedule-month]");
+  list.innerHTML = '<p class="schedule-status">Loading the latest schedule...</p>';
+  try {
+    const services = await fetchPublishedSchedule();
+    list.innerHTML = "";
+    month.textContent = "Upcoming schedule";
+    if (!services.length) {
+      list.innerHTML = '<p class="schedule-status">No schedule entries have been published yet.</p>';
+      return;
+    }
+    services.forEach((service) => list.append(createScheduleCard(service)));
+  } catch (error) {
+    list.innerHTML = `<p class="schedule-status schedule-status-error">${error.message}</p>`;
+    month.textContent = "Schedule unavailable";
+  }
 }
 
 renderSchedule();

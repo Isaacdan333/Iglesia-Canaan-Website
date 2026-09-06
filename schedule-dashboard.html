@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Schedule Dashboard | Iglesia Canaan</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand" aria-label="Iglesia Canaan home">
+        <img src="images/church/church logo.png" alt="Iglesia Canaan logo" class="brand-logo" />
+        <div><span class="brand-name">Iglesia Canaan</span><span class="brand-tag">Schedule dashboard</span></div>
+      </a>
+      <a class="button secondary" href="main-schedule.html">View public schedule</a>
+    </div>
+  </header>
+
+  <main class="section dashboard-section">
+    <div class="container dashboard-layout">
+      <section class="dashboard-heading">
+        <p class="section-tag">Staff access</p>
+        <h1>Plan the next gathering.</h1>
+        <p>Manage date-specific services for Sunday, Tuesday, and Thursday.</p>
+      </section>
+
+      <section class="dashboard-panel" data-auth-panel>
+        <form class="dashboard-form" data-login-form>
+          <h2>Sign in</h2>
+          <label>Email<input type="email" name="email" autocomplete="email" required /></label>
+          <label>Password<input type="password" name="password" autocomplete="current-password" required /></label>
+          <button class="button primary" type="submit">Sign in</button>
+          <p class="form-status" data-login-status role="status"></p>
+        </form>
+      </section>
+
+      <section class="dashboard-panel dashboard-app" data-dashboard-app hidden>
+        <div class="dashboard-toolbar">
+          <div><p class="section-tag">Schedule entries</p><h2>Upcoming services</h2></div>
+          <button class="button secondary" type="button" data-sign-out>Sign out</button>
+        </div>
+        <p class="form-status" data-app-status role="status"></p>
+        <div class="dashboard-content-grid">
+          <form class="dashboard-form" data-entry-form>
+            <input type="hidden" name="id" />
+            <h3 data-form-title>Add schedule entry</h3>
+            <label>Service title<input name="title" required placeholder="Sunday worship service" /></label>
+            <div class="form-row">
+              <label>Date<input type="date" name="service_date" required /></label>
+              <label>Start time<input type="time" name="start_time" required /></label>
+              <label>End time<input type="time" name="end_time" required /></label>
+            </div>
+            <label>Location<input name="location" placeholder="Main sanctuary" /></label>
+            <label>Highlight<input name="highlight" placeholder="Santa Cena" /></label>
+            <div class="form-row">
+              <label>Moderator<input name="moderator" /></label>
+              <label>Worship leader<input name="worship_leader" /></label>
+            </div>
+            <div class="form-row">
+              <label>Tiempos<input name="tiempos" /></label>
+              <label>Preacher<input name="preacher" /></label>
+            </div>
+            <label>Notes<textarea name="notes" rows="3" placeholder="Cancellation, special instructions, or other details"></textarea></label>
+            <label class="checkbox-label"><input type="checkbox" name="published" checked /> Publish on the public schedule</label>
+            <div class="form-actions"><button class="button primary" type="submit" data-save-entry>Save entry</button><button class="button text-button" type="button" data-cancel-edit hidden>Cancel edit</button></div>
+            <p class="form-status" data-form-status role="status"></p>
+          </form>
+          <div class="entry-list" data-entry-list aria-live="polite"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="schedule-api.js"></script>
+  <script src="schedule-dashboard.js"></script>
+</body>
+</html>
