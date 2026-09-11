@@ -1,3 +1,7 @@
+const isInsidePages = window.location.pathname.includes('/pages/') || window.location.pathname.includes('\\pages\\');
+const assetPrefix = isInsidePages ? '../' : '';
+const resolveAssetPath = (path) => (path.startsWith("http") || path.startsWith("../") ? path : assetPrefix + path);
+
 const photoAlbums = {
 	church: {
 		title: "Church Life",
@@ -47,7 +51,7 @@ function createPhotoCard(photo, openPhoto) {
 	button.addEventListener("click", openPhoto);
 
 	const image = document.createElement("img");
-	image.src = photo.src;
+	image.src = resolveAssetPath(photo.src);
 	image.alt = photo.caption;
 	image.loading = "lazy";
 
@@ -88,7 +92,7 @@ function setupLightbox(photos) {
 	const showPhoto = (index) => {
 		currentIndex = (index + photos.length) % photos.length;
 		const photo = photos[currentIndex];
-		image.src = photo.src;
+		image.src = resolveAssetPath(photo.src);
 		image.alt = photo.caption;
 		caption.textContent = photo.caption;
 		lightbox.hidden = false;
@@ -147,7 +151,7 @@ function renderPageAlbum() {
 	container.append(createPhotoGrid(albumPhotos, (index) => openPhoto(allPhotos.indexOf(albumPhotos[index]))));
 	const link = document.createElement("p");
 	link.className = "photo-link";
-	link.innerHTML = '<a class="button secondary" href="gallery.html">View all photos</a>';
+	link.innerHTML = `<a class="button secondary" href="${isInsidePages ? 'gallery.html' : 'pages/gallery.html'}">View all photos</a>`;
 	container.append(link);
 	section.append(container);
 }
@@ -224,7 +228,7 @@ function setupGallerySlideshow() {
 
 		const imageLoads = photos.map((photo) => new Promise((resolve) => {
 			const image = document.createElement("img");
-			image.src = photo.src;
+			image.src = resolveAssetPath(photo.src);
 			image.alt = photo.caption;
 			image.loading = "eager";
 			image.addEventListener("load", resolve, { once: true });
@@ -285,14 +289,14 @@ function setupYouthSlideshow() {
 
 	images.slice(1).forEach((src) => {
 		const preload = new Image();
-		preload.src = src;
+		preload.src = resolveAssetPath(src);
 	});
 
 	window.setInterval(() => {
 		currentIndex = (currentIndex + 1) % images.length;
 		image.classList.add("is-changing");
 		window.setTimeout(() => {
-			image.src = images[currentIndex];
+			image.src = resolveAssetPath(images[currentIndex]);
 			image.classList.remove("is-changing");
 		}, 700);
 	}, 5000);
