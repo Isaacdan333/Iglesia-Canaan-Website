@@ -11,7 +11,7 @@ The schedule uses Supabase Auth and PostgreSQL so the static site can remain hos
 
 ## 2. Configure the website
 
-Open [`supabase-config.js`](supabase-config.js) and replace the two placeholders with the Supabase project URL and the browser-safe publishable/anon key from **Project Settings > API**:
+Open [`js/supabase-config.js`](js/supabase-config.js) and replace the two placeholders with the Supabase project URL and the browser-safe publishable/anon key from **Project Settings > API**:
 
 ```js
 window.SUPABASE_URL = "https://your-project.supabase.co";
