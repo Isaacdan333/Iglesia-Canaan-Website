@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bible Passage Lookup | Iglesia Canaan</title>
+    <meta name="description" content="Look up Scripture passages and read God's Word at Iglesia Canaan." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <div class="brand-controls">
+          <a href="../index.html" class="brand" aria-label="Iglesia Canaan home">
+            <img src="../images/church/church logo.png" alt="Iglesia Canaan logo" class="brand-logo" />
+            <div>
+              <span class="brand-name">Iglesia Canaan</span>
+              <span class="brand-tag">Growing in Faith Together</span>
+            </div>
+          </a>
+          <button class="language-toggle" type="button" data-language-toggle aria-label="Switch to Spanish">Cambiar a español</button>
+        </div>
+
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="../index.html">Home</a>
+          <div class="nav-dropdown">
+            <a href="ministries.html" aria-haspopup="true">Ministries</a>
+            <div class="dropdown-menu">
+              <a href="ministries.html">All Ministries</a>
+              <a href="youth-ministry.html">Youth Ministry</a>
+            </div>
+          </div>
+          <a href="main-schedule.html">Schedule</a>
+          <a href="events.html">Events</a>
+          <a href="gallery.html">Gallery</a>
+          <a href="bible.html" class="active">Bible</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-hero small-hero">
+        <div class="container">
+          <p class="section-tag">Scripture</p>
+          <h1>Read God's Word.</h1>
+          <p class="lead">Search and read exact Scripture passages directly from the Bible.</p>
+        </div>
+      </section>
+
+      <section class="section bible-lookup-section">
+        <div class="container bible-lookup-container">
+          <div class="bible-search-card">
+            <form class="bible-search-form" data-bible-form>
+              <label for="bible-input" class="bible-search-label">Enter a Bible Reference</label>
+              <div class="bible-input-group">
+                <input
+                  id="bible-input"
+                  type="text"
+                  class="bible-input"
+                  data-bible-input
+                  placeholder="e.g. John 3:16"
+                  autocomplete="off"
+                  required
+                />
+                <button type="submit" class="button primary" data-bible-submit>Look Up</button>
+              </div>
+            </form>
+
+            <div class="bible-examples">
+              <span class="bible-examples-label">Try an example:</span>
+              <button type="button" class="bible-chip" data-example-ref="John 3:16">John 3:16</button>
+              <button type="button" class="bible-chip" data-example-ref="Genesis 1:1">Genesis 1:1</button>
+              <button type="button" class="bible-chip" data-example-ref="Psalm 23">Psalm 23</button>
+              <button type="button" class="bible-chip" data-example-ref="Romans 8:28">Romans 8:28</button>
+            </div>
+
+            <p class="form-status bible-status" data-bible-status role="status" hidden></p>
+          </div>
+
+          <!-- Scripture Output Card -->
+          <article class="bible-result-card" data-bible-result hidden>
+            <div class="bible-result-header">
+              <div>
+                <h2 class="bible-result-title" data-result-ref></h2>
+                <div class="bible-meta-tags" data-result-meta></div>
+              </div>
+              <span class="bible-version-badge" data-result-version></span>
+            </div>
+
+            <div class="bible-text-wrapper">
+              <blockquote class="bible-text" data-result-text></blockquote>
+            </div>
+
+            <footer class="bible-result-footer">
+              <p class="bible-copyright" data-result-copyright></p>
+            </footer>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-wrap">
+        <div>
+          <p class="footer-title">Iglesia Canaan</p>
+          <p>Growing in faith, serving with love.</p>
+        </div>
+        <div class="footer-links">
+          <a href="https://www.facebook.com/IglesiaCanaan.CanaanChurch/" target="_blank" rel="noreferrer">Facebook</a>
+          <a href="https://www.instagram.com/iglesiacanaan/" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../js/gallery.js"></script>
+    <script src="../js/language.js"></script>
+    <script src="../js/bible.js"></script>
+  </body>
+</html>
