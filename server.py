@@ -32,6 +32,9 @@ def load_env():
 load_env()
 
 API_KEY = os.environ.get("BIBLE_API_KEY", "")
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://pbrphqhuudubcfujlwuk.supabase.co")
+SUPABASE_ANON_KEY = os.environ.get("SUPABASE_ANON_KEY", "")
 # Default Bible: King James Version (KJV)
 BIBLE_ID = os.environ.get("BIBLE_ID", "de4e12af7f28f599-02")
 BIBLE_VERSION_NAME = os.environ.get("BIBLE_VERSION_NAME", "King James Version (KJV)")
@@ -241,6 +244,65 @@ def fetch_passage_from_api(passage_id, bible_id=BIBLE_ID, api_key=API_KEY):
     except urllib.error.URLError as err:
         raise RuntimeError(f"Could not connect to API.Bible: {err.reason}")
 
+def embed_search_query(query):
+    if not OPENAI_API_KEY:
+        raise ValueError("OPENAI_API_KEY is not configured on the server. Please set it in your .env file.")
+
+    request = urllib.request.Request(
+        "https://api.openai.com/v1/embeddings",
+        data=json.dumps({"input": query, "model": "text-embedding-3-small"}).encode("utf-8"),
+        headers={
+            "Authorization": f"Bearer {OPENAI_API_KEY}",
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        method="POST"
+    )
+
+    try:
+        with urllib.request.urlopen(request, timeout=30) as response:
+            data = json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as err:
+        error_text = err.read().decode("utf-8")
+        raise RuntimeError(f"OpenAI embeddings request failed ({err.code}): {error_text}")
+    except urllib.error.URLError as err:
+        raise RuntimeError(f"Could not connect to OpenAI: {err.reason}")
+
+    embedding = data.get("data", [{}])[0].get("embedding")
+    if not isinstance(embedding, list) or len(embedding) != 1536:
+        raise RuntimeError("OpenAI returned an invalid embedding.")
+    return embedding
+
+def search_bible_verses(query):
+    if not OPENAI_API_KEY:
+        raise ValueError("OPENAI_API_KEY is not configured on the server. Please set it in your .env file.")
+    if not SUPABASE_ANON_KEY:
+        raise ValueError("SUPABASE_ANON_KEY is not configured on the server. Please set it in your .env file.")
+
+    request = urllib.request.Request(
+        f"{SUPABASE_URL}/rest/v1/rpc/match_bible_verses",
+        data=json.dumps({
+            "query_embedding": embed_search_query(query),
+            "match_count": 6
+        }).encode("utf-8"),
+        headers={
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": f"Bearer {SUPABASE_ANON_KEY}",
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        method="POST"
+    )
+
+    try:
+        with urllib.request.urlopen(request, timeout=30) as response:
+            return json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as err:
+        error_text = err.read().decode("utf-8")
+        raise RuntimeError(f"Bible search failed ({err.code}): {error_text}")
+    except urllib.error.URLError as err:
+        raise RuntimeError(f"Could not connect to Supabase: {err.reason}")
+
 class ChurchSiteHandler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
         # Enable CORS for local testing
@@ -257,6 +319,8 @@ class ChurchSiteHandler(http.server.SimpleHTTPRequestHandler):
         parsed = urllib.parse.urlparse(self.path)
         if parsed.path == "/api/bible/passage":
             self.handle_passage_lookup(parsed.query)
+        elif parsed.path == "/api/bible/semantic-search":
+            self.handle_semantic_search(parsed.query)
         else:
             # Fall back to static file serving
             super().do_GET()
@@ -272,6 +336,15 @@ class ChurchSiteHandler(http.server.SimpleHTTPRequestHandler):
             except Exception:
                 ref = ""
             self.process_reference(ref)
+        elif parsed.path == "/api/bible/semantic-search":
+            content_length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(content_length).decode("utf-8")
+            try:
+                data = json.loads(body)
+                query = data.get("query", "")
+            except Exception:
+                query = ""
+            self.process_semantic_search(query)
         else:
             self.send_error(404, "Endpoint not found")
 
@@ -279,6 +352,11 @@ class ChurchSiteHandler(http.server.SimpleHTTPRequestHandler):
         params = urllib.parse.parse_qs(query_string)
         reference = params.get("reference", [""])[0]
         self.process_reference(reference)
+
+    def handle_semantic_search(self, query_string):
+        params = urllib.parse.parse_qs(query_string)
+        query = params.get("query", [""])[0]
+        self.process_semantic_search(query)
 
     def process_reference(self, reference):
         if not reference:
@@ -315,6 +393,25 @@ class ChurchSiteHandler(http.server.SimpleHTTPRequestHandler):
             self.send_json_response(502, {"error": str(e)})
         except ValueError as e:
             self.send_json_response(500, {"error": str(e)})
+        except Exception as e:
+            self.send_json_response(500, {"error": f"Unexpected server error: {str(e)}"})
+
+    def process_semantic_search(self, query):
+        query = query.strip() if isinstance(query, str) else ""
+        if not query:
+            self.send_json_response(400, {"error": "Missing 'query'."})
+            return
+        if len(query) > 1000:
+            self.send_json_response(400, {"error": "Query must be 1000 characters or fewer."})
+            return
+
+        try:
+            results = search_bible_verses(query)
+            self.send_json_response(200, results)
+        except ValueError as e:
+            self.send_json_response(500, {"error": str(e)})
+        except RuntimeError as e:
+            self.send_json_response(502, {"error": str(e)})
         except Exception as e:
             self.send_json_response(500, {"error": f"Unexpected server error: {str(e)}"})
 

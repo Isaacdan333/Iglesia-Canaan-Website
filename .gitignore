@@ -1,3 +1,5 @@
 .env
 __pycache__/
 *.py[cod]
+SEMANTIC-SEARCH-PLAN.md
+data/generated/
