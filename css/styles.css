@@ -1548,11 +1548,98 @@ h3 {
   line-height: 1.4;
 }
 
+.bible-mode-tabs {
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(13, 34, 64, 0.06);
+  border-radius: 999px;
+  padding: 0.35rem;
+}
+
+.bible-mode-tab {
+  flex: 1;
+  padding: 0.65rem 1rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--navy-deep);
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.bible-mode-tab.active {
+  background: var(--white);
+  color: var(--navy-deep);
+  box-shadow: var(--shadow);
+}
+
+.bible-mode-tab:not(.active):hover {
+  color: var(--gold-deep);
+}
+
+.bible-mode-panel {
+  display: grid;
+  gap: 2rem;
+}
+
+.bible-mode-panel[hidden] {
+  display: none;
+}
+
+.bible-semantic-results {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.bible-semantic-card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  box-shadow: var(--shadow);
+  border-left: 6px solid var(--gold);
+  border-top: 1px solid rgba(13, 34, 64, 0.08);
+  border-right: 1px solid rgba(13, 34, 64, 0.08);
+  border-bottom: 1px solid rgba(13, 34, 64, 0.08);
+}
+
+.bible-semantic-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.bible-semantic-ref {
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--navy-deep);
+}
+
+.bible-semantic-text {
+  margin: 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  line-height: 1.6;
+  color: var(--navy-deep);
+  font-style: normal;
+}
+
 @media (max-width: 600px) {
   .bible-input-group {
     flex-direction: column;
   }
   .bible-result-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .bible-mode-tabs {
+    flex-direction: column;
+  }
+  .bible-semantic-card-header {
     flex-direction: column;
     align-items: flex-start;
   }
