@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Schedule | Iglesia Canaan"
+  description="See the monthly service schedule and ministry assignments at Iglesia Canaan."
+  active="schedule"
+>
+  <section class="page-hero small-hero">
+    <div class="container">
+      <p class="section-tag">Church schedule</p>
+      <h1>Serving together, one gathering at a time.</h1>
+    </div>
+  </section>
+
+  <section class="section schedule-section" data-schedule>
+    <div class="container">
+      <div class="schedule-intro">
+        <div>
+          <p class="section-tag">Monthly assignments</p>
+          <h2 data-schedule-month>Monthly schedule</h2>
+        </div>
+        <a class="button secondary" href="/schedule-dashboard">Staff dashboard</a>
+      </div>
+      <div class="schedule-list" data-schedule-list></div>
+    </div>
+  </section>
+
+  <script slot="scripts" is:inline src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script slot="scripts" is:inline src="/js/supabase-config.js"></script>
+  <script slot="scripts" is:inline src="/js/schedule-api.js"></script>
+  <script slot="scripts" is:inline src="/js/schedule.js"></script>
+</BaseLayout>

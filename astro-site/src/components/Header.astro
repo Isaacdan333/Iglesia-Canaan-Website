@@ -1,0 +1,40 @@
+---
+export type NavKey = "home" | "ministries" | "youth" | "schedule" | "events" | "gallery" | "bible" | "contact";
+
+interface Props {
+  active?: NavKey;
+}
+
+const { active } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="container nav-wrap">
+    <div class="brand-controls">
+      <a href="/" class="brand" aria-label="Iglesia Canaan home">
+        <img src="/images/church/church logo.png" alt="Iglesia Canaan logo" class="brand-logo" />
+        <div>
+          <span class="brand-name">Iglesia Canaan</span>
+          <span class="brand-tag">Growing in Faith Together</span>
+        </div>
+      </a>
+      <button class="language-toggle" type="button" data-language-toggle aria-label="Switch to Spanish">Cambiar a español</button>
+    </div>
+
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="/" class={active === "home" ? "active" : undefined}>Home</a>
+      <div class="nav-dropdown">
+        <a href="/ministries" class={active === "ministries" || active === "youth" ? "active" : undefined} aria-haspopup="true">Ministries</a>
+        <div class="dropdown-menu">
+          <a href="/ministries">All Ministries</a>
+          <a href="/youth-ministry">Youth Ministry</a>
+        </div>
+      </div>
+      <a href="/main-schedule" class={active === "schedule" ? "active" : undefined}>Schedule</a>
+      <a href="/events" class={active === "events" ? "active" : undefined}>Events</a>
+      <a href="/gallery" class={active === "gallery" ? "active" : undefined}>Gallery</a>
+      <a href="/bible" class={active === "bible" ? "active" : undefined}>Bible</a>
+      <a href="/contact" class={active === "contact" ? "active" : undefined}>Contact</a>
+    </nav>
+  </div>
+</header>

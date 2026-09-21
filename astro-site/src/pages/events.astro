@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PhotoAlbumSection from "../components/PhotoAlbumSection.astro";
+import EventCard from "../components/EventCard.astro";
+---
+
+<BaseLayout
+  title="Events | Iglesia Canaan"
+  description="See upcoming events and gatherings at Iglesia Canaan."
+  active="events"
+>
+  <section class="page-hero small-hero">
+    <div class="container">
+      <p class="section-tag">Events</p>
+      <h1>Gathering with purpose.</h1>
+    </div>
+  </section>
+
+  <PhotoAlbumSection album="events" />
+
+  <section class="section">
+    <div class="container events-list">
+      <EventCard
+        month="Sun"
+        day="11 AM"
+        title="Sunday Service"
+        description="Join us for worship, prayer, and a message centered on faith and growth."
+      />
+
+      <EventCard
+        month="Thu"
+        day="7 PM"
+        title="Thursday Prayer & Fellowship"
+        description="Spend time in prayer, encouragement, and community as we grow closer to God."
+      />
+
+      <EventCard
+        month="Youth"
+        day="7:30 PM"
+        title="Youth Gathering"
+        description="A welcoming time for young people to connect, learn, and grow in faith together."
+      />
+    </div>
+  </section>
+</BaseLayout>

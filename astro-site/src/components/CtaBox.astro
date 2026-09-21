@@ -1,0 +1,27 @@
+---
+interface Props {
+  tag: string;
+  title: string;
+  buttonText: string;
+  buttonHref: string;
+  buttonTarget?: string;
+  style?: string;
+}
+
+const { tag, title, buttonText, buttonHref, buttonTarget, style } = Astro.props;
+---
+
+<div class="container cta-box" style={style}>
+  <div>
+    <p class="section-tag">{tag}</p>
+    <h2>{title}</h2>
+  </div>
+  <a
+    class="button primary"
+    href={buttonHref}
+    target={buttonTarget}
+    rel={buttonTarget ? "noreferrer" : undefined}
+  >
+    {buttonText}
+  </a>
+</div>

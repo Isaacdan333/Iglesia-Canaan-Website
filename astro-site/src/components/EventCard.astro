@@ -1,0 +1,21 @@
+---
+interface Props {
+  month: string;
+  day: string;
+  title: string;
+  description: string;
+}
+
+const { month, day, title, description } = Astro.props;
+---
+
+<article class="event-card">
+  <div class="event-date">
+    <span class="month">{month}</span>
+    <span class="day">{day}</span>
+  </div>
+  <div>
+    <h2>{title}</h2>
+    <p>{description}</p>
+  </div>
+</article>

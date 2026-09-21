@@ -1,0 +1,18 @@
+---
+interface Props {
+  imageSrc: string;
+  imageAlt: string;
+  reversed?: boolean;
+}
+
+const { imageSrc, imageAlt, reversed = false } = Astro.props;
+---
+
+<article class={`story-row${reversed ? " story-row-reversed" : ""}`}>
+  <div class="story-image">
+    <img src={imageSrc} alt={imageAlt} />
+  </div>
+  <div class="story-copy">
+    <slot />
+  </div>
+</article>

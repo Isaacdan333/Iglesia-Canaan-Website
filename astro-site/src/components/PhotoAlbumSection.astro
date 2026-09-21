@@ -1,0 +1,9 @@
+---
+interface Props {
+  album: string;
+}
+
+const { album } = Astro.props;
+---
+
+<section class="section photo-section" data-photo-album={album}></section>

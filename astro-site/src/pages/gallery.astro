@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Photo Gallery | Iglesia Canaan"
+  description="See photos of Iglesia Canaan, our church family, ministries, and gatherings."
+  active="gallery"
+>
+  <section class="page-hero small-hero">
+    <div class="container gallery-intro">
+      <p class="section-tag">Photo Gallery</p>
+      <h1>Come see what life at Iglesia Canaan is like.</h1>
+      <p>Explore photos of our church, our people, and the moments we share together in faith.</p>
+    </div>
+  </section>
+
+  <!-- This is the section that has the photos playing in a slideshow -->
+  <section class="gallery-slideshow-section" aria-label="Featured gallery slideshow">
+    <div class="gallery-slideshow" data-gallery-slideshow>
+      <div class="gallery-slideshow-track"></div>
+    </div>
+  </section>
+
+  <section class="section" data-gallery-page></section>
+</BaseLayout>

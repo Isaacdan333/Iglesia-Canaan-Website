@@ -1,0 +1,144 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import StoryRow from "../components/StoryRow.astro";
+import PhotoAlbumSection from "../components/PhotoAlbumSection.astro";
+import CtaBox from "../components/CtaBox.astro";
+---
+
+<BaseLayout
+  title="Iglesia Canaan | Welcome Home"
+  description="Iglesia Canaan is a welcoming church family focused on spiritual growth, ministry, and growing closer to God."
+  active="home"
+>
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">Welcome to Iglesia Canaan</p>
+        <h1>A place to grow in faith, love, and community.</h1>
+        <p class="lead">
+          We are a growing church family devoted to helping people draw closer to God,
+          strengthen their faith, and build meaningful relationships through Christ.
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="/contact">Plan Your Visit</a>
+          <a class="button secondary" href="/ministries">Explore Ministries</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="card-badge">Service Schedule</div>
+        <ul class="service-list">
+          <li>
+            <span class="day">Sunday</span>
+            <span class="time">Lessons · 10:00 AM - 11:00 AM</span>
+          </li>
+          <li>
+            <span class="day">Sunday</span>
+            <span class="time">Worship & Service · 11:00 AM - 1:00 PM</span>
+          </li>
+          <li>
+            <span class="day">Thursday</span>
+            <span class="time">7:00 PM - 9:00 PM</span>
+          </li>
+          <li>
+            <span class="day">Friday</span>
+            <span class="time">Youth Service · 7:30 PM - 9:00 PM</span>
+          </li>
+        </ul>
+        <p class="card-note">Come as you are. Everyone is welcome.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about-section">
+    <div class="container two-col">
+      <div>
+        <p class="section-tag">About Us</p>
+        <h2>Growing together in faith and purpose.</h2>
+        <p>
+          At Iglesia Canaan, we believe in spiritual growth, discipleship, and building a
+          welcoming place where families and individuals can encounter God. We are a church
+          that is expanding with joy, faith, and a passion to see lives transformed.
+        </p>
+        <p>
+          We are especially committed to nurturing the next generation through our youth
+          ministry and helping every person grow closer to God through prayer, worship, and
+          community.
+        </p>
+      </div>
+
+      <div class="info-panel">
+        <h3>What We Believe</h3>
+        <ul>
+          <li>Jesus Christ is at the center of all we do.</li>
+          <li>Every person is welcome in the house of God.</li>
+          <li>We grow through prayer, worship, and community.</li>
+          <li>We are building a stronger future for our youth and church family.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section highlight-section">
+    <div class="container story-section-content">
+      <p class="section-tag centered">Our Focus</p>
+      <div class="story-list">
+        <StoryRow imageSrc="/images/church/pastor.png" imageAlt="Pastor speaking to the church family">
+          <p class="section-tag">Spiritual Growth</p>
+          <h2>Growing deeper through worship and teaching.</h2>
+          <p>We help people deepen their relationship with God through worship, prayer, and teaching that connects faith to everyday life.</p>
+        </StoryRow>
+        <StoryRow imageSrc="/images/youth/youth-worship.png" imageAlt="Young people worshipping together" reversed>
+          <p class="section-tag">Youth Ministry</p>
+          <h2>Investing in the next generation.</h2>
+          <p>We mentor young people to live boldly for Christ, discover their purpose, and build a strong spiritual foundation.</p>
+          <p><a href="/youth-ministry">Learn more</a></p>
+        </StoryRow>
+      </div>
+    </div>
+  </section>
+
+  <section class="section community-section">
+    <div class="container story-section-content">
+      <p class="section-tag centered">Community Life</p>
+      <h2 class="section-title-centered">We enjoy spending time together beyond Sunday services.</h2>
+      <div class="story-list">
+        <StoryRow imageSrc="/images/youth/youth-at-applepicking.jpg" imageAlt="Church friends enjoying time together outdoors">
+          <p class="section-tag">Park Days</p>
+          <h2>Making room for joy outdoors.</h2>
+          <p>We come together for outdoor fun, fellowship, and quality time with family and friends.</p>
+        </StoryRow>
+        <StoryRow imageSrc="/images/church/64th-anniversary.png" imageAlt="Church family sharing a celebration together" reversed>
+          <p class="section-tag">Celebrating Together</p>
+          <h2>Sharing milestones with joy.</h2>
+          <p>We celebrate birthdays and milestones with encouragement, gratitude, and heartfelt community support.</p>
+        </StoryRow>
+        <StoryRow imageSrc="/images/church/outside-church.png" imageAlt="Iglesia Canaan church building">
+          <p class="section-tag">Holiday Gatherings</p>
+          <h2>Finding unity in every season.</h2>
+          <p>From special church events to festive gatherings, we make room for laughter, gratitude, and a stronger sense of family.</p>
+        </StoryRow>
+      </div>
+    </div>
+  </section>
+
+  <PhotoAlbumSection album="church" />
+
+  <section class="section gallery-invite">
+    <CtaBox
+      tag="Our Church Family"
+      title="Take a look at the people and places that make Iglesia Canaan feel like home."
+      buttonText="View Our Photos"
+      buttonHref="/gallery"
+    />
+  </section>
+
+  <section class="section cta-section">
+    <CtaBox
+      tag="Join Us"
+      title="We would love to worship with you."
+      buttonText="Get in Touch"
+      buttonHref="/contact"
+    />
+  </section>
+</BaseLayout>

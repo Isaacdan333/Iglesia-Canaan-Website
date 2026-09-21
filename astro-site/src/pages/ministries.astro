@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PhotoAlbumSection from "../components/PhotoAlbumSection.astro";
+import MinistryCard from "../components/MinistryCard.astro";
+---
+
+<BaseLayout
+  title="Ministries | Iglesia Canaan"
+  description="Learn about Iglesia Canaan ministries and how you can grow in faith and service."
+  active="ministries"
+>
+  <section class="page-hero small-hero">
+    <div class="container">
+      <p class="section-tag">Ministries</p>
+      <h1>Serving together in love.</h1>
+    </div>
+  </section>
+
+  <PhotoAlbumSection album="ministries" />
+
+  <section class="section">
+    <div class="container ministry-grid">
+      <MinistryCard
+        title="Youth Ministry"
+        description="A place where young people can grow spiritually, build friendships, and discover their calling in Christ."
+        learnMoreHref="/youth-ministry"
+      />
+
+      <MinistryCard
+        title="Worship & Prayer"
+        description="We gather to worship, pray, and seek God together in a spirit of unity and gratitude."
+      />
+
+      <MinistryCard
+        title="Discipleship"
+        description="We help believers grow in the Word, walk in faith, and live out the teachings of Jesus."
+      />
+
+      <MinistryCard
+        title="Community Care"
+        description="We support one another through encouragement, service, and practical care in times of need."
+      />
+    </div>
+  </section>
+</BaseLayout>

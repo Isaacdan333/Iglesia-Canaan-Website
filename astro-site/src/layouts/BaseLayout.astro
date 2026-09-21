@@ -1,0 +1,56 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import type { NavKey } from "../components/Header.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  active?: NavKey;
+  /** Skip header/footer/global fonts/gallery+language scripts for standalone pages (e.g. the staff dashboard). */
+  bare?: boolean;
+  /** Optional class applied directly to <main>, matching pages that style <main> itself. */
+  mainClass?: string;
+}
+
+const { title, description, active, bare = false, mainClass } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    {!bare && (
+      <>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </>
+    )}
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    {!bare && <Header active={active} />}
+    <slot name="header" />
+
+    <main class={mainClass}>
+      <slot />
+    </main>
+
+    {!bare && <Footer />}
+
+    {!bare && (
+      <>
+        <script is:inline src="/js/gallery.js"></script>
+        <script is:inline src="/js/language.js"></script>
+      </>
+    )}
+    <slot name="scripts" />
+  </body>
+</html>
