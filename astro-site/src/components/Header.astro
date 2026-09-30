@@ -10,6 +10,13 @@ const { active } = Astro.props;
 
 <header class="site-header">
   <div class="container nav-wrap">
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="main-navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span class="sr-only">Open navigation</span>
+    </button>
+
     <div class="brand-controls">
       <a href="/" class="brand" aria-label="Iglesia Canaan home">
         <img src="/images/church/church logo.png" alt="Iglesia Canaan logo" class="brand-logo" />
@@ -21,7 +28,8 @@ const { active } = Astro.props;
       <button class="language-toggle" type="button" data-language-toggle aria-label="Switch to Spanish">Cambiar a español</button>
     </div>
 
-    <nav class="main-nav" aria-label="Main navigation">
+    <nav class="main-nav" id="main-navigation" aria-label="Main navigation">
+      <button class="nav-close" type="button" data-nav-close aria-label="Close navigation">&times;</button>
       <a href="/" class={active === "home" ? "active" : undefined}>Home</a>
       <div class="nav-dropdown">
         <a href="/ministries" class={active === "ministries" || active === "youth" ? "active" : undefined} aria-haspopup="true">Ministries</a>
@@ -37,4 +45,5 @@ const { active } = Astro.props;
       <a href="/contact" class={active === "contact" ? "active" : undefined}>Contact</a>
     </nav>
   </div>
+  <button class="nav-overlay" type="button" data-nav-overlay aria-label="Close navigation"></button>
 </header>
