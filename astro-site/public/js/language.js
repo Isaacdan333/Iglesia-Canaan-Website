@@ -118,7 +118,50 @@ const translations = {
   "Sunday Worship": "Adoración dominical",
   "Sunday Worship:": "Adoración dominical:",
   "Thursday:": "Jueves:",
-  "Sunday Lessons: Adults and youth, 10:00 AM - 11:00 AM": "Clases dominicales: Adultos y jóvenes, 10:00 AM - 11:00 AM"
+  "Sunday Lessons: Adults and youth, 10:00 AM - 11:00 AM": "Clases dominicales: Adultos y jóvenes, 10:00 AM - 11:00 AM",
+  "Schedule | Iglesia Canaan": "Horario | Iglesia Canaan",
+  "See the monthly service schedule and ministry assignments at Iglesia Canaan.": "Consulta el horario mensual de servicios y las asignaciones de ministerios de Iglesia Canaan.",
+  "Church schedule": "Horario de la iglesia",
+  "Serving together, one gathering at a time.": "Sirviendo juntos, una reunión a la vez.",
+  "Monthly assignments": "Asignaciones mensuales",
+  "Monthly schedule": "Horario mensual",
+  "Staff dashboard": "Panel del personal",
+  "Youth Ministry | Iglesia Canaan": "Ministerio juvenil | Iglesia Canaan",
+  "Learn more about the youth ministry at Iglesia Canaan and how young people can grow in faith together.": "Conoce más sobre el ministerio juvenil de Iglesia Canaan y cómo los jóvenes pueden crecer juntos en la fe.",
+  "Make room for faith and friendship.": "Haz espacio para la fe y la amistad.",
+  "Growing in Truth": "Creciendo en la verdad",
+  "We explore the Bible ourselves.": "Exploramos la Biblia por nuestra cuenta.",
+  "We open God's Word with honest questions and curious hearts, learning how its truth connects to our everyday lives. Together, we discover what we believe and grow in confidence to follow Jesus.": "Abrimos la Palabra de Dios con preguntas sinceras y corazones curiosos, aprendiendo cómo su verdad se conecta con nuestra vida diaria. Juntos descubrimos lo que creemos y crecemos en confianza para seguir a Jesús.",
+  "Beyond Our Walls": "Más allá de nuestras paredes",
+  "We go out and share life together.": "Salimos y compartimos la vida juntos.",
+  "Fellowship gives us space to laugh, encourage one another, and build friendships that last. Whether we are serving, exploring, or enjoying a new place, we make memories while reflecting God's love.": "El compañerismo nos da espacio para reír, animarnos unos a otros y construir amistades duraderas. Ya sea que estemos sirviendo, explorando o disfrutando de un lugar nuevo, creamos recuerdos mientras reflejamos el amor de Dios.",
+  "Real Community": "Comunidad auténtica",
+  "There is room to just be together.": "Hay espacio para simplemente estar juntos.",
+  "Some of the best connections happen in the ordinary moments. We hang out, talk, play, and get to know one another outside of church so every friendship can grow naturally and everyone can feel at home.": "Algunas de las mejores conexiones surgen en los momentos cotidianos. Pasamos tiempo juntos, conversamos, jugamos y nos conocemos fuera de la iglesia para que cada amistad crezca naturalmente y todos se sientan como en casa.",
+  "Discipleship": "Discipulado",
+  "Young people exploring the Bible together": "Jóvenes explorando la Biblia juntos",
+  "Young people sharing fellowship together": "Jóvenes compartiendo en compañerismo",
+  "Friends from the youth ministry spending time together": "Amigos del ministerio juvenil compartiendo tiempo juntos",
+  "Bible Passage Lookup | Iglesia Canaan": "Búsqueda de pasajes bíblicos | Iglesia Canaan",
+  "Look up Scripture passages and read God's Word at Iglesia Canaan.": "Busca pasajes bíblicos y lee la Palabra de Dios en Iglesia Canaan.",
+  "Scripture": "Las Escrituras",
+  "Read God's Word.": "Lee la Palabra de Dios.",
+  "Search and read exact Scripture passages directly from the Bible.": "Busca y lee pasajes bíblicos exactos directamente de la Biblia.",
+  "Bible search mode": "Modo de búsqueda bíblica",
+  "Reference Lookup": "Buscar por referencia",
+  "Search by Topic": "Buscar por tema",
+  "Enter a Bible Reference": "Ingresa una referencia bíblica",
+  "e.g. John 3:16": "p. ej., Juan 3:16",
+  "Look Up": "Buscar",
+  "Try an example:": "Prueba un ejemplo:",
+  "Search Scripture by Topic": "Buscar en las Escrituras por tema",
+  "e.g. grace, forgiveness, trusting God": "p. ej., gracia, perdón, confiar en Dios",
+  "Search": "Buscar",
+  "Try a topic:": "Prueba un tema:",
+  "grace": "gracia",
+  "forgiveness": "perdón",
+  "loving your enemies": "amar a tus enemigos",
+  "trusting God during difficult times": "confiar en Dios durante tiempos difíciles"
 };
 
 const normalizeText = (value) => value.replace(/\s+/g, " ").trim();
@@ -129,6 +172,7 @@ const savedLanguage = localStorage.getItem("site-language") || "en";
 
 function translatePage(language) {
   const dictionary = language === "es" ? spanishText : englishText;
+  const translateValue = (value) => dictionary.get(normalizeText(value));
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   const textNodes = [];
   let node;
@@ -139,13 +183,28 @@ function translatePage(language) {
 
   textNodes.forEach((textNode) => {
     const value = normalizeText(textNode.nodeValue);
-    const translatedValue = dictionary.get(value);
+    const translatedValue = translateValue(value);
     if (translatedValue) {
       const leadingWhitespace = textNode.nodeValue.match(/^\s*/)[0];
       const trailingWhitespace = textNode.nodeValue.match(/\s*$/)[0];
       textNode.nodeValue = `${leadingWhitespace}${translatedValue}${trailingWhitespace}`;
     }
   });
+
+  document.querySelectorAll("[placeholder], [aria-label], img[alt]").forEach((element) => {
+    ["placeholder", "aria-label", "alt"].forEach((attribute) => {
+      const value = element.getAttribute(attribute);
+      const translatedValue = value && translateValue(value);
+      if (translatedValue) element.setAttribute(attribute, translatedValue);
+    });
+  });
+  document.title = translateValue(document.title) || document.title;
+  const description = document.querySelector('meta[name="description"]');
+  if (description) {
+    const content = description.getAttribute("content");
+    const translatedDescription = content && translateValue(content);
+    if (translatedDescription) description.setAttribute("content", translatedDescription);
+  }
 
   document.documentElement.lang = language;
   languageToggle.textContent = language === "es" ? "Switch to English" : "Cambiar a español";
